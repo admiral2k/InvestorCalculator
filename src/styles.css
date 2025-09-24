@@ -1,8 +1,18 @@
 body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   min-height: 200vh;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6) 60%, rgb(0, 0, 0) 100%),
     radial-gradient(circle at top center, rgba(0, 255, 42, 0.541), transparent 70%) no-repeat;
   background-color: black;
   color: rgb(219, 219, 219);
   font-family: Alan Sans, Arial, Helvetica, sans-serif;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+  font-size: 1.2rem;
 }

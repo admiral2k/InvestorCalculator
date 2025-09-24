@@ -1,8 +1,9 @@
 import { Component, signal } from '@angular/core';
 import { Header } from "./header/header";
+import { InvestmentForm } from "./investment-form/investment-form";
 @Component({
   selector: 'app-root',
-  imports: [Header],
+  imports: [Header, InvestmentForm],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
