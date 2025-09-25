@@ -1,31 +1,54 @@
-<form>
+<form (ngSubmit)="onSubmit()">
   <div class="inputs">
     <div class="input-conainer">
       <p class="input-name">Start Date</p>
-      <input type="date" />
+      <input type="date" name="staringDate" [(ngModel)]="enteredStartingDate" />
     </div>
 
     <div class="input-conainer">
       <p class="input-name">Initial Investment Amount</p>
-      <input type="text" value="10000$" placeholder="10000$" />
+      <input
+        type="text"
+        name="initialInvestment"
+        placeholder="10000$"
+        [ngModel]="enteredInitialInvestmentAmount() | currency : 'USD' : 'symbol' : '1.0-0'"
+        (ngModelChange)="onAmountChange($event, enteredInitialInvestmentAmount)"
+      />
     </div>
 
-
     <div class="input-conainer">
-      <p class="input-name">Investment Type  <span class="help-text">?</span></p>
+      <p class="input-name">Investment Type <span class="help-text">?</span></p>
       <div class="radio-input">
-        <input type="radio" name="investment-type" id="lump" checked />
+        <input
+          type="radio"
+          name="investment-type"
+          id="lump"
+          [(ngModel)]="selectedInvestmentType"
+          [value]="InvestmentType.Lump"
+        />
         <label for="lump" class="radio-input-text">Lump Sum</label>
       </div>
       <div class="radio-input">
-        <input type="radio" name="investment-type" id="recurring" />
+        <input
+          type="radio"
+          name="investment-type"
+          id="recurring"
+          [(ngModel)]="selectedInvestmentType"
+          [value]="InvestmentType.Recurring"
+        />
         <label for="recurring" class="radio-input-text">Recurring Investment</label>
       </div>
     </div>
 
-    <div class="input-conainer">
+    <div class="input-conainer" [style.visibility]="selectedInvestmentType() === InvestmentType.Recurring">
       <p class="input-name">Recurring Contribution <span class="help-text">(per year)</span></p>
-      <input type="text" value="100$" placeholder="100$" />
+      <input
+        type="text"
+        name="recurringContribution"
+        placeholder="100$"
+        [ngModel]="enteredRecurringContribution() | currency : 'USD' : 'symbol' : '1.0-0'"
+        (ngModelChange)="onAmountChange($event, enteredRecurringContribution)"
+      />
     </div>
   </div>
   <button class="estimate-button">ESTIMATE</button>
