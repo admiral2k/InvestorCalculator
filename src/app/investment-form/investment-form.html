@@ -1,4 +1,4 @@
-<form (ngSubmit)="onSubmit()">
+<form (ngSubmit)="onSubmit()" class="animate__animated animate__slideInDown">
   <div class="inputs">
     <div class="input-conainer">
       <p class="input-name">Start Date</p>
@@ -40,7 +40,12 @@
       </div>
     </div>
 
-    <div class="input-conainer" [style.visibility]="selectedInvestmentType() === InvestmentType.Recurring">
+    <div
+      class="input-conainer"
+      [style.visibility]="
+        selectedInvestmentType() === InvestmentType.Recurring ? 'visible' : 'hidden'
+      "
+    >
       <p class="input-name">Recurring Contribution <span class="help-text">(per year)</span></p>
       <input
         type="text"

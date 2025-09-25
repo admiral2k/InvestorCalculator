@@ -1,5 +1,7 @@
 form {
   background-color: #1c6d44;
+  background-image: linear-gradient(180deg, #286e1e, #15410f);
+  box-shadow: 0 0 100px rgba(0, 0, 0, 1);
   padding: 10px;
   border-radius: 10px;
   color: whitesmoke;
@@ -10,7 +12,7 @@ form {
 }
 
 .inputs {
-      display: grid;
+  display: grid;
   grid-template-columns: 1fr 1fr;
 }
 
@@ -19,7 +21,7 @@ form {
 }
 
 .input-name {
-    margin-bottom: 5px;
+  margin-bottom: 5px;
 }
 
 ::-webkit-calendar-picker-indicator {
@@ -31,10 +33,12 @@ input {
   font-family: alan sans, Arial, Helvetica, sans-serif;
   font-size: 1rem;
   color: rgba(255, 255, 255, 0.719);
-  border: 1px solid rgba(255, 255, 255, 0.719);;
+  border: 1px solid rgba(255, 255, 255, 0.719);
   border-radius: 10px;
   background-color: transparent;
   padding: 10px 20px;
+  transition: box-shadow 0.5s ease;
+  outline: none;
 }
 
 input::placeholder {
@@ -43,50 +47,60 @@ input::placeholder {
 
 input:focus {
   color: white;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.719);
 }
 
-input[type="radio"],
-input[type="date"]  {
-    cursor: pointer;
-    margin-left: 0;
+input:hover {
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.719);
+}
+
+input[type='radio']:hover,
+input[type='radio']:focus {
+  box-shadow: none;
+}
+
+input[type='radio'],
+input[type='date'] {
+  cursor: pointer;
+  margin-left: 0;
 }
 
 .radio-input-text {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .help-text {
-    margin-left: 2px;
+  margin-left: 2px;
   font-size: 1rem;
   color: rgb(151, 151, 151);
   cursor: help;
 }
 
-
 .help-text:hover {
   opacity: 0.8;
-  text-decoration:underline;
+  text-decoration: underline;
 }
 
 .estimate-button {
-    margin-top: 10px;
-    padding: 10px;
-    width: 100%;
-    font-size: 2rem;
-    font-weight: 700;
-    font-family: alan sans;
-    border: none;
-    border-radius: 10px;
-    background-color:#5cbb6c;
-    transition: opacity 0.15s;
-    cursor: pointer;
+  margin-top: 10px;
+  padding: 10px;
+  width: 100%;
+  font-size: 2rem;
+  font-weight: 700;
+  font-family: alan sans;
+  border: none;
+  border-radius: 10px;
+  background-color: #5cbb6c;
+  background: linear-gradient(45deg, #459c39, #0cd42d, #459c39);
+  background-size: 400% 400%;
+  transition: opacity 0.2s ease;
+  cursor: pointer;
 }
 
 .estimate-button:hover {
-    opacity: 0.8;
+  opacity: 0.8;
 }
 
-
 .estimate-button:active {
-    opacity: 0.6;
+  opacity: 0.6;
 }

@@ -1,7 +1,7 @@
 import { CurrencyPipe } from '@angular/common';
 import { Component, signal, WritableSignal, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NumericParser } from './numeric-parser';
+import { NumericParser } from '../services/numeric-parser';
 
 export enum InvestmentType {
   Lump = 'LUMP',
