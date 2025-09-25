@@ -1,6 +1,7 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, effect, signal, WritableSignal } from '@angular/core';
+import { Component, signal, WritableSignal, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { NumericParser } from './numeric-parser';
 
 export enum InvestmentType {
   Lump = 'LUMP',
@@ -14,19 +15,17 @@ export enum InvestmentType {
   styleUrl: './investment-form.css'
 })
 export class InvestmentForm {
+  numericParser = inject(NumericParser)
   InvestmentType = InvestmentType; // to get access in HTML
-  selectedInvestmentType = signal<InvestmentType>(InvestmentType.Lump)
 
   enteredStartingDate = signal("")
+  selectedInvestmentType = signal<InvestmentType>(InvestmentType.Lump)
   enteredInitialInvestmentAmount = signal(10000);
   enteredRecurringContribution = signal(100)
 
-  // Clear input ans save
   onAmountChange(value: string, signalToChange: WritableSignal<Number>) {
-    const numeric = parseFloat(value.replace(/[^0-9.]/g, ''));
-    signalToChange.set(isNaN(numeric) ? 0 : numeric);
+    signalToChange.set(this.numericParser.clearNumericInput(value));
   }
-
 
   onSubmit() {
     console.log('Selected starting date:', this.enteredStartingDate());
