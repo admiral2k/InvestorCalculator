@@ -1,6 +1,6 @@
 <main>
   <app-header />
-  <app-investment-form (estimate)="onEstimateStocks($event)" />
+  <app-investment-form (estimate)="onEstimateStocks($event)" (loading)="changeLoadingState($event)" />
 
-  <app-stocks-list [stockList]="stockList" [animKey]="animKey()" />
+  <app-stocks-list [stockList]="stockList" [animKey]="animKey()" [isLoading]="isLoading()" />
 </main>

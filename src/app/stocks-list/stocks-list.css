@@ -29,3 +29,33 @@ th {
     transform: none;
   }
 }
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #ddd;
+  border-top-color: #40d83b;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+.no-data-filler {
+  text-align: center;
+}
+
+#stocks-list {
+    width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums; 
+}

@@ -13,11 +13,16 @@ import { StockModel } from './services/stocks-api';
 export class App {
   protected readonly title = signal('investor-calculator');
   stockList: StockModel[] = []
-
   animKey = signal(0);
+  isLoading = signal(false);
 
   onEstimateStocks(stocks: StockModel[]) {
     this.stockList = stocks;
     this.animKey.update(v => v + 1);
+  }
+
+  changeLoadingState(isLoadingValue: boolean) {
+      this.isLoading.set(isLoadingValue);
+      console.log("Changed state to" + isLoadingValue)
   }
 }

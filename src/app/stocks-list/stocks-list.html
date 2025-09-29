@@ -11,19 +11,24 @@
     <th>Profit</th>
   </tr>
   @for (stock of stockList(); track $index; let i = $index) {
-  <tr
-    class="row-base"
-    [class.play]="play"
-    [style.animationDelay.ms]="i * 70">
+  <tr class="row-base" [class.play]="play" [style.animationDelay.ms]="i * 70">
     <td>{{ stock.ticker }}</td>
-    <td>{{ stock.buyDate }}</td>
-    <td>{{ stock.buyPrice }}</td>
-    <td>{{ stock.sellDate }}</td>
-    <td>{{ stock.sellPrice }}</td>
-    <td>{{ stock.returnPct }}</td>
-    <td>{{ stock.initialInvestment }}</td>
-    <td>{{ stock.currentValue }}</td>
-    <td>{{ stock.profit }}</td>
+    <td>{{ stock.buyDate | date:'yyyy-MM-dd' }}</td>
+    <td>{{ stock.buyPrice | currency:'USD':'symbol':'1.2-2' }}</td>
+    <td>{{ stock.sellDate | date:'yyyy-MM-dd' }}</td>
+    <td>{{ stock.sellPrice | currency:'USD':'symbol':'1.2-2' }}</td>
+    <td>{{ stock.returnPct | number:'1.2-2' }}%</td>
+    <td>{{ stock.initialInvestment | currency:'USD':'symbol':'1.2-2' }}</td>
+    <td>{{ stock.currentValue | currency:'USD':'symbol':'1.2-2' }}</td>
+    <td>{{ stock.profit | currency:'USD':'symbol':'1.2-2' }}</td>
   </tr>
   }
 </table>
+
+@if (isLoading()) {
+  <div class="spinner-container">
+    <div class="spinner"></div>
+  </div>
+} @else if (stockList().length === 0) {
+  <p class="no-data-filler">No data yet. Click Estimate to start.</p>
+}

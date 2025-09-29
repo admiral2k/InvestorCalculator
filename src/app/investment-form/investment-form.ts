@@ -4,6 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { NumericParser } from '../services/numeric-parser';
 import { StockModel, StocksService } from '../services/stocks-api';
 
+import { finalize, catchError, of } from 'rxjs';
+
+
 export enum InvestmentType {
   Lump = 'LUMP',
   Recurring = 'RECURRING'
@@ -26,12 +29,15 @@ export class InvestmentForm {
   enteredRecurringContribution = signal(100)
 
   estimate = output<StockModel[]>()
+  loading = output<boolean>()
 
   onAmountChange(value: string, signalToChange: WritableSignal<number>) {
     signalToChange.set(this.numericParser.clearNumericInput(value));
   }
 
   onSubmit() {
+    this.loading.emit(true)
+
     console.log('Selected starting date:', this.enteredStartingDate());
     console.log('Selected type:', this.selectedInvestmentType());
     console.log('Selected initial investment amount:', this.enteredInitialInvestmentAmount());
@@ -40,11 +46,28 @@ export class InvestmentForm {
     const date = this.enteredStartingDate();
     const perTicker = this.enteredInitialInvestmentAmount();
 
-    this.stocks
-      .getStocksTableSimple(date, perTicker)
-      .subscribe(rows => {
-        this.estimate.emit(rows);
-      });
+
+this.stocks.getStocksTableSimple(date, perTicker)
+  .pipe(
+    catchError(err => {
+      console.error('API error:', err);
+      return of([]); // сервис всё равно соберёт строки (демо для проблемных)
+    }),
+    finalize(() => this.loading.emit(false))
+  )
+  .subscribe(rows => {
+    this.estimate.emit(rows);
+  });
+
+
+    // this.stocks
+    //   .getStocksTableSimple(date, perTicker)
+    //   .subscribe(error => {console.log("ОШИБКа" , error)},
+    //   rows => {
+    //     this.estimate.emit(rows);
+    //     console.log(rows)
+    //     this.loading.emit(false);
+    //   });
 
     setTimeout(() => {
       const el = document.getElementById('stocks-list');
