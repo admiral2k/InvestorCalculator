@@ -1,2 +1,6 @@
-<app-header/>
-<app-investment-form/>
+<main>
+  <app-header />
+  <app-investment-form (estimate)="onEstimateStocks($event)" />
+
+  <app-stocks-list [stockList]="stockList" [animKey]="animKey()" />
+</main>

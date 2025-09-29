@@ -1,0 +1,31 @@
+table,
+th,
+td {
+  border: none;
+  text-align: right;
+
+  padding: 18px;
+}
+
+th {
+  color: #0ed12d;
+}
+
+/* Базово: скрыто и слегка смещено */
+.row-base {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+/* Когда play=true — проигрываем появление */
+.row-base.play {
+  animation: rowEnter 250ms ease-out forwards;
+}
+
+/* Ключевые кадры */
+@keyframes rowEnter {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

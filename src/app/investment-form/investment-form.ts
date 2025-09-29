@@ -1,7 +1,8 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, signal, WritableSignal, inject } from '@angular/core';
+import { Component, signal, WritableSignal, inject, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NumericParser } from '../services/numeric-parser';
+import { StockModel, StocksService } from '../services/stocks-api';
 
 export enum InvestmentType {
   Lump = 'LUMP',
@@ -15,6 +16,7 @@ export enum InvestmentType {
   styleUrl: './investment-form.css'
 })
 export class InvestmentForm {
+  stocks = inject(StocksService)
   numericParser = inject(NumericParser)
   InvestmentType = InvestmentType; // to get access in HTML
 
@@ -23,7 +25,9 @@ export class InvestmentForm {
   enteredInitialInvestmentAmount = signal(10000);
   enteredRecurringContribution = signal(100)
 
-  onAmountChange(value: string, signalToChange: WritableSignal<Number>) {
+  estimate = output<StockModel[]>()
+
+  onAmountChange(value: string, signalToChange: WritableSignal<number>) {
     signalToChange.set(this.numericParser.clearNumericInput(value));
   }
 
@@ -32,5 +36,21 @@ export class InvestmentForm {
     console.log('Selected type:', this.selectedInvestmentType());
     console.log('Selected initial investment amount:', this.enteredInitialInvestmentAmount());
     console.log('Selected recurring contribution:', this.enteredRecurringContribution());
+
+    const date = this.enteredStartingDate();
+    const perTicker = this.enteredInitialInvestmentAmount();
+
+    this.stocks
+      .getStocksTableSimple(date, perTicker)
+      .subscribe(rows => {
+        this.estimate.emit(rows);
+      });
+
+    setTimeout(() => {
+      const el = document.getElementById('stocks-list');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 0);
   }
 }

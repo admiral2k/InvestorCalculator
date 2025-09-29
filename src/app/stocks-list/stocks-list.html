@@ -1,0 +1,29 @@
+<table id="stocks-list">
+  <tr>
+    <th>Ticker / Stock</th>
+    <th>Buy Date</th>
+    <th>Buy Price</th>
+    <th>Sell Date</th>
+    <th>Sell Price</th>
+    <th>Return %</th>
+    <th>Initial Investment</th>
+    <th>Current Value</th>
+    <th>Profit</th>
+  </tr>
+  @for (stock of stockList(); track $index; let i = $index) {
+  <tr
+    class="row-base"
+    [class.play]="play"
+    [style.animationDelay.ms]="i * 70">
+    <td>{{ stock.ticker }}</td>
+    <td>{{ stock.buyDate }}</td>
+    <td>{{ stock.buyPrice }}</td>
+    <td>{{ stock.sellDate }}</td>
+    <td>{{ stock.sellPrice }}</td>
+    <td>{{ stock.returnPct }}</td>
+    <td>{{ stock.initialInvestment }}</td>
+    <td>{{ stock.currentValue }}</td>
+    <td>{{ stock.profit }}</td>
+  </tr>
+  }
+</table>

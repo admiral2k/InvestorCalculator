@@ -1,0 +1,9 @@
+{
+  "/stooq": {
+    "target": "https://stooq.com",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "info",
+    "pathRewrite": { "^/stooq": "" }
+  }
+}
