@@ -1,34 +1,67 @@
-<table id="stocks-list">
-  <tr>
-    <th>Ticker / Stock</th>
-    <th>Buy Date</th>
-    <th>Buy Price</th>
-    <th>Sell Date</th>
-    <th>Sell Price</th>
-    <th>Return %</th>
-    <th>Initial Investment</th>
-    <th>Current Value</th>
-    <th>Profit</th>
-  </tr>
-  @for (stock of stockList(); track $index; let i = $index) {
-  <tr class="row-base" [class.play]="play" [style.animationDelay.ms]="i * 70">
-    <td>{{ stock.ticker }}</td>
-    <td>{{ stock.buyDate | date:'yyyy-MM-dd' }}</td>
-    <td>{{ stock.buyPrice | currency:'USD':'symbol':'1.2-2' }}</td>
-    <td>{{ stock.sellDate | date:'yyyy-MM-dd' }}</td>
-    <td>{{ stock.sellPrice | currency:'USD':'symbol':'1.2-2' }}</td>
-    <td>{{ stock.returnPct | number:'1.2-2' }}%</td>
-    <td>{{ stock.initialInvestment | currency:'USD':'symbol':'1.2-2' }}</td>
-    <td>{{ stock.currentValue | currency:'USD':'symbol':'1.2-2' }}</td>
-    <td>{{ stock.profit | currency:'USD':'symbol':'1.2-2' }}</td>
-  </tr>
+<table id="stocks-list" class="stocks-table">
+  <thead>
+    <tr>
+      <th scope="col" class="left">Ticker / Stock</th>
+      <th scope="col">Buy Date</th>
+      <th scope="col" class="num">Buy Price</th>
+      <th scope="col">Sell Date</th>
+      <th scope="col" class="num">Sell Price</th>
+      <th scope="col" class="num">Return %</th>
+      <th scope="col" class="num">Initial Investment</th>
+      <th scope="col" class="num">Current Value</th>
+      <th scope="col" class="num">Profit</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    @for (stock of stockList(); track stock.ticker; let i = $index) {
+    <tr class="row-base" [class.play]="play" [style.animationDelay.ms]="i * 70">
+      <td class="left ticker">{{ stock.ticker }}</td>
+      <td>{{ stock.buyDate | date : 'dd.MM.yyyy' }}</td>
+      <td class="num">{{ stock.buyPrice | currency : 'USD' : 'symbol' : '1.2-2' }}</td>
+      <td>{{ stock.sellDate | date : 'dd.MM.yyyy' }}</td>
+      <td class="num">{{ stock.sellPrice | currency : 'USD' : 'symbol' : '1.2-2' }}</td>
+
+      <td class="num" [ngClass]="{ up: stock.returnPct > 0, down: stock.returnPct < 0 }">
+        <span class="arrow" aria-hidden="true">
+          {{ stock.returnPct > 0 ? '▲' : stock.returnPct < 0 ? '▼' : '•' }}
+        </span>
+        {{ stock.returnPct | number : '1.2-2' }}%
+      </td>
+
+      <td class="num">{{ stock.initialInvestment | currency : 'USD' : 'symbol' : '1.2-2' }}</td>
+      <td class="num">{{ stock.currentValue | currency : 'USD' : 'symbol' : '1.2-2' }}</td>
+
+      <td class="num" [ngClass]="{ up: stock.profit > 0, down: stock.profit < 0 }">
+        {{ stock.profit | currency : 'USD' : 'symbol' : '1.2-2' }}
+      </td>
+    </tr>
+    }
+  </tbody>
+
+  @if (stockList().length !== 0) {
+
+  <tfoot>
+    <tr>
+      <th scope="row" class="left">Totals</th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+
+      <td class="num">{{ avgReturnPct() | number : '1.2-2' }}%</td>
+      <td class="num">{{ totalInitial() | currency : 'USD' : 'symbol' : '1.2-2' }}</td>
+      <td class="num">{{ totalCurrent() | currency : 'USD' : 'symbol' : '1.2-2' }}</td>
+      <td class="num" [ngClass]="{ up: totalProfit() > 0, down: totalProfit() < 0 }">
+        {{ totalProfit() | currency : 'USD' : 'symbol' : '1.2-2' }}
+      </td>
+    </tr>
+  </tfoot>
   }
 </table>
 
 @if (isLoading()) {
-  <div class="spinner-container">
-    <div class="spinner"></div>
-  </div>
-} @else if (stockList().length === 0) {
-  <p class="no-data-filler">No data yet. Click Estimate to start.</p>
+<div class="spinner-container">
+  <div class="spinner"></div>
+</div>
 }

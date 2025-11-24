@@ -1,61 +1,45 @@
-table,
-th,
-td {
-  border: none;
-  text-align: right;
-
-  padding: 18px;
-}
-
-th {
-  color: #0ed12d;
-}
-
-/* Базово: скрыто и слегка смещено */
-.row-base {
-  opacity: 0;
-  transform: translateY(6px);
-}
-
-/* Когда play=true — проигрываем появление */
-.row-base.play {
-  animation: rowEnter 250ms ease-out forwards;
-}
-
-/* Ключевые кадры */
-@keyframes rowEnter {
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-.spinner-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem;
-}
-
-.spinner {
-  width: 48px;
-  height: 48px;
-  border: 5px solid #ddd;
-  border-top-color: #40d83b;
-  border-radius: 50%;
-  animation: spin 0.9s linear infinite;
-}
-
-@keyframes spin {
-  100% { transform: rotate(360deg); }
-}
-
-.no-data-filler {
-  text-align: center;
-}
-
-#stocks-list {
-    width: 100%;
+#stocks-list.stocks-table {
+  width: 100%;
   border-collapse: collapse;
-  font-variant-numeric: tabular-nums; 
+  font-variant-numeric: tabular-nums;
+  transition: transform 0.5s;
+}
+
+#stocks-list thead th {
+  position: sticky;
+  top: 0;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(4px);
+  z-index: 1;
+}
+
+#stocks-list th, #stocks-list td {
+  border: none;
+  padding: 18px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+#stocks-list th { color: #fff; } /*  #0ed12d */
+#stocks-list .left { text-align: left; }
+#stocks-list .num  { text-align: right; }
+#stocks-list .ticker { font-weight: 600; letter-spacing: .5px; }
+
+.up   { color: #3fd26f; }
+.down { color: #ff6b6b; }
+.arrow { display: inline-block; width: 1em; margin-right: 6px; opacity: .85; }
+
+.row-base { opacity: 0; transform: translateY(6px); }
+.row-base.play { animation: rowEnter 250ms ease-out forwards; }
+@keyframes rowEnter { to { opacity: 1; transform: none; } }
+
+.spinner-container { display: flex; justify-content: center; align-items: center; padding: 2rem; }
+.spinner {
+  width: 48px; height: 48px; border: 5px solid #ddd; border-top-color: #40d83b;
+  border-radius: 50%; animation: spin .9s linear infinite;
+}
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+@media (max-width: 900px) {
+  #stocks-list { display: block; overflow-x: auto; }
 }

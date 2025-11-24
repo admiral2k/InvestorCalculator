@@ -58,17 +58,7 @@ this.stocks.getStocksTableSimple(date, perTicker)
   .subscribe(rows => {
     this.estimate.emit(rows);
   });
-
-
-    // this.stocks
-    //   .getStocksTableSimple(date, perTicker)
-    //   .subscribe(error => {console.log("ОШИБКа" , error)},
-    //   rows => {
-    //     this.estimate.emit(rows);
-    //     console.log(rows)
-    //     this.loading.emit(false);
-    //   });
-
+  
     setTimeout(() => {
       const el = document.getElementById('stocks-list');
       if (el) {

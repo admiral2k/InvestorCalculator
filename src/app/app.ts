@@ -22,7 +22,7 @@ export class App {
   }
 
   changeLoadingState(isLoadingValue: boolean) {
-      this.isLoading.set(isLoadingValue);
-      console.log("Changed state to" + isLoadingValue)
+    this.isLoading.set(isLoadingValue);
+    console.log("Changed state to" + isLoadingValue)
   }
 }
