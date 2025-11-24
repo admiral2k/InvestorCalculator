@@ -45,7 +45,7 @@ You can pass your list manually.
 
 ## 📦 Installation
 ```bash
-git clone https://github.com/admiral2k/investor-calculator.git
+git clone https://github.com/admiral2k/InvestorCalculator.git
 cd investor-calculator
 npm install
 npm start
